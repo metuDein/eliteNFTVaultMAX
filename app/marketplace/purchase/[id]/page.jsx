@@ -70,7 +70,7 @@ const page = (props) => {
         return;
       }
 
-      if (currentCollection?.gasfee === "unpaid") {
+      if (currentCollection?.gasFee === "unpaid") {
         setLoading(false);
         setPurchase("failed");
         toast.error("Transaction failed.");

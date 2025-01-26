@@ -22,7 +22,7 @@ const NotificationsTab = ({ triggerStyle, user }) => {
   useEffect(() => {
     if (appData) {
       const myAlerts = notifications.filter(
-        (item) => item?.recieiver?._id === user?._id
+        (item) => item?.receiver?._id === user?._id
       );
       setAlert(myAlerts);
     }
@@ -35,11 +35,11 @@ const NotificationsTab = ({ triggerStyle, user }) => {
           href={`/user/notification/${data?._id}`}
           className="w-full text-left font-semibold flex flex-col items-start"
         >
-          <p className="text-xl font-semibold text-[#ff4ff3] text-left">{`${(data?.subject).substring(
+          <p className="text-[14px] font-semibold text-[#ff4ff3] text-left">{`${(data?.subject).substring(
             0,
             14
           )}${(data?.subject).length > 15 ? "..." : ""}`}</p>
-          <p className="text-[14px] text-left">{`${(data?.subject).substring(
+          <p className="text-[12px] font-extralight text-left">{`${(data?.body).substring(
             0,
             14
           )}${(data?.subject).length > 15 ? "..." : ""}`}</p>

@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import ContextProvider from "@/context";
 import Provider from "@/components/context/Provider";
 import { DataProvider } from "@/components/context/DataProvider";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -82,6 +83,13 @@ export default function RootLayout({ children }) {
             </DataProvider>
           </Provider>
         </ContextProvider>
+        {/* <!--Start of Tawk.to Script--> */}
+        {/* <Script
+          src="https://embed.tawk.to/6794d2f5825083258e0afe9a/1iielg4e8"
+          strategy="lazyOnload"
+          onLoad={() => console.log("Tawk.to script loaded successfully")}
+        /> */}
+        <script src="https://embed.tawk.to/6794d2f5825083258e0afe9a/1iielg4e8"></script>
       </body>
     </html>
   );

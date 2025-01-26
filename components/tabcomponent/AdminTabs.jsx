@@ -145,7 +145,7 @@ const AdminTabs = ({}) => {
               {/* <p className="font-semibold text-[13px]">10</p> */}
             </Link>
             <Link
-              href={"#"}
+              href={"/admin/sendEmail"}
               className="w-[150px] sm:w-[240px] h-[130px] sm:h-[220px] rounded-[10px] text-black bg-[#fff] flex flex-col items-center justify-center"
             >
               <FontAwesomeIcon

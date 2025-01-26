@@ -81,8 +81,26 @@ const page = (props) => {
       } else {
         setLoading(false);
         setPurchase("success");
-
         setSmessage(`The purchase of ${asset.name} has been completed.`);
+        await fetch("/api/mailer/custom", {
+          method: "POST",
+          body: JSON.stringify({
+            email: asset?.owner?.email,
+            subject: "you made a sale!!! 🎉",
+            body: `<h2>Hello ${asset?.owner?.username}</h2> 
+        <p>The sale for the item <b> ${asset?.name} </b> was successfull</p>
+        <p> the amount of ${asset?.price} ETH has been added to your balance </p>
+        <p> Congratulations on your sale head over to your profile to make a withdrawal.</p>
+        `,
+          }),
+        });
+        await fetch("/api/adminrequest/user", {
+          method: "PATCH",
+          body: JSON.stringify({
+            id: asset?.owner?._id,
+            balance: asset?.owner?.balance + asset?.price,
+          }),
+        });
         return;
       }
     } catch (error) {
@@ -130,10 +148,10 @@ const page = (props) => {
           <p className="text-[16.9px] text-[#969494] mb-3">
             {" "}
             <span>Owned by {asset?.owner?.username}</span>{" "}
-            <span className="mx-4">
+            {/* <span className="mx-4">
               {" "}
               <FontAwesomeIcon icon={faEye} /> 200
-            </span>{" "}
+            </span>{" "} */}
             <span>
               <FontAwesomeIcon icon={faHeart} className="text-[#ef8bf7]" /> 10
               favourite
@@ -144,7 +162,7 @@ const page = (props) => {
           <p className="text-[#ffffff] text-[38px] font-bold">
             {asset?.price} ETH
           </p>
-          <p className="text-[16.9px] text-[#969494]"> $29000 USD</p>
+          {/* <p className="text-[16.9px] text-[#969494]"> $29000 USD</p> */}
           <div className="w-[99%] border-[#d9d9d9] border my-3" />
           <div className="bg-[#582b71]/50 rounded-[10px] py-4 px-2">
             <p className="my-1 font-semibold text-xl text-white">Description</p>

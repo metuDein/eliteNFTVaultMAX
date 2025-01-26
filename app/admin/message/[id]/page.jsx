@@ -10,7 +10,7 @@ const page = (props) => {
   const { notifications } = appData;
 
   const [notificaton, setNotification] = useState(null);
-
+  const [date, setDate] = useState("");
   const [resolvedParams, setResolvedParams] = useState(null);
 
   function formatDate(dateString) {
@@ -45,9 +45,15 @@ const page = (props) => {
       const currentNotification = notifications.find(
         (item) => item._id === resolvedParams.id
       );
+      console.log(currentNotification);
+
       setNotification(currentNotification);
     }
   }, [resolvedParams, notifications]);
+
+  useEffect(() => {
+    // setDate(formatDate(notificaton?.createdAt));
+  }, [notificaton]);
 
   if (!resolvedParams || !appData) return <Loading otherStyles={"mx-auto"} />;
   return (
@@ -62,13 +68,13 @@ const page = (props) => {
               height={50}
               className="inline-flex w-[20px] h-[20px]"
             />{" "}
-            From: EliteNFTVault Admin
+            From: {notificaton?.sender?.username}
           </p>
         </div>
         <div className="bg-[#ff4ff3]/30 rounded p-2 w-[300px] sm:w-[450px] flex items-center justify-center">
           <p className="break-words">{notificaton?.subject}</p>
         </div>
-        <div className="bg-[#ff4ff3]/30 rounded p-2 w-[300px] sm:w-[450px] flex flex-col items-center justify-center min-h-[300px]">
+        <div className="bg-[#ff4ff3]/30 rounded p-2 w-[300px] sm:w-[450px] flex flex-col items-center justify-center min-h-[200px]">
           <p className="break-words">{notificaton?.body}</p>
           {notificaton && (
             <span className="self-end mt-1 sm:mt-4">

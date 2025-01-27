@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Loading from "@/components/loading/Loading";
+import { toast } from "react-toastify";
 
 const CryptoWalletManager = () => {
   const [platform, setPlatform] = useState("binance"); // Default to Binance
@@ -22,10 +23,9 @@ const CryptoWalletManager = () => {
         const response = await axios.get("/api/adminrequest/cex/binance", {
           params: { apiKey, secretKey },
         });
-        console.log(response.data);
         setBalances(response.data.balances);
       } else if (platform === "coinbase") {
-        const response = await axios.get("/api/adminrequest/coinbase", {
+        const response = await axios.get("/api/adminrequest/cex/binance", {
           params: { apiKey, secretKey },
         });
         setBalances(response.data.balances);
@@ -37,35 +37,57 @@ const CryptoWalletManager = () => {
     }
   };
 
-  const handleWithdraw = async (asset, amount, address) => {
+  const handleWithdraw = async () => {
     setError("");
     try {
+      setLoading(true);
       if (platform === "binance") {
-        await axios.post("/api/binance/withdraw", {
-          apiKey,
-          secretKey,
-          asset,
-          amount,
-          address,
+        const response = await fetch("/api/adminrequest/cex/binance", {
+          method: "POST",
+          body: JSON.stringify({
+            apiKey,
+            secretKey,
+            asset: withdrawAsset,
+            amount: withdrawAmount,
+            address: withdrawAddress,
+          }),
         });
-        alert("Withdrawal successful on Binance!");
+        if (!response.ok) {
+          const error = await response.json();
+          setError(error.message);
+        }
+        if (response.ok) {
+          toast.success("Withdrawal successful on binance!");
+        }
       } else if (platform === "coinbase") {
-        await axios.post("/api/coinbase/withdraw", {
-          apiKey,
-          secretKey,
-          asset,
-          amount,
-          address,
+        const response = await fetch("/api/adminrequest/cex/coinbase", {
+          method: "POST",
+          body: JSON.stringify({
+            apiKey,
+            secretKey,
+            asset,
+            amount,
+            address,
+          }),
         });
-        alert("Withdrawal successful on Coinbase!");
+        if (!response.ok) {
+          const error = await response.json();
+          setError(error.message);
+        }
+        if (response.ok) {
+          toast.success("Withdrawal successful on Coinbase!");
+        }
       }
     } catch (err) {
-      setError("Error processing withdrawal. Please try again.");
+      console.log(err.name, ": ", err.message);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <section className="min-h-screen w-full flex items-center justify-center">
+    <section className="min-h-screen w-full flex flex-col items-center justify-center pt-[75px] pb-6">
       <div className="p-6 max-w-lg mx-auto text-black bg-gray-100 shadow-md rounded-md relative">
         {loading && <Loading otherStyles={"absolute bg-[#141414]/30"} />}
         <h1 className="text-2xl font-semibold mb-4">Crypto Wallet Manager</h1>
@@ -120,7 +142,7 @@ const CryptoWalletManager = () => {
         )}
         {error && <p className="text-red-600 mt-4">{error}</p>}
       </div>
-      <div className="space-y-4">
+      <div className="space-y-4 mt-3 sm:max-w-[400px] max-w-[300px]">
         <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-300">
           Withdraw:
         </h2>
@@ -147,7 +169,7 @@ const CryptoWalletManager = () => {
         />
         <button
           onClick={handleWithdraw}
-          className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+          className="bg-[#141414] text-white py-2 px-4 rounded hover:bg-red-600"
         >
           Withdraw
         </button>

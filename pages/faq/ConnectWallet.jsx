@@ -43,7 +43,7 @@ const ConnectWallet = () => {
         <p className=" font-extrabold text-black">
           How to get your metamask private key (API token)
         </p>
-        <div className="flex items-center justify-between sm:justify-center sm:space-x-2 my-2">
+        {/* <div className="flex items-center justify-between sm:justify-center sm:space-x-2 my-2">
           <ConfirmBtn
             title={"Desktop"}
             otherStyles={` p-1 sm:p-2 ${
@@ -58,8 +58,8 @@ const ConnectWallet = () => {
             }`}
             handleClicked={() => setSetup("mobile")}
           />
-        </div>
-        <div className="mx-auto max-w-4xl p-4 flex flex-col sm:flex-row sm:space-x-2 items-center justify-center">
+        </div> */}
+        <div className="mx-auto max-w-4xl p-4 flex flex-col sm:flex-row sm:space-x-2 items-start justify-center">
           <div className="flex flex-col items-center justify-center ">
             <p className="text-black"> step 1 : get your metamask API Key </p>
             <video
@@ -86,7 +86,7 @@ const ConnectWallet = () => {
         <p className=" font-extrabold text-black">
           How to get your Trust Secret Phrase (API token)
         </p>
-        <div className="flex items-center justify-between sm:justify-center sm:space-x-2 my-2">
+        {/* <div className="flex items-center justify-between sm:justify-center sm:space-x-2 my-2">
           <ConfirmBtn
             title={"Desktop"}
             otherStyles={` p-1 sm:p-2 ${
@@ -101,8 +101,8 @@ const ConnectWallet = () => {
             }`}
             handleClicked={() => setSetup("mobile")}
           />
-        </div>
-        <div className="mx-auto max-w-4xl p-4 flex flex-col sm:flex-row sm:space-x-2 items-center justify-center">
+        </div> */}
+        <div className="mx-auto max-w-4xl p-4 flex flex-col sm:flex-row sm:space-x-2 items-start justify-center">
           <div className="flex flex-col items-center justify-center ">
             <p className="text-black">
               {" "}
@@ -132,7 +132,7 @@ const ConnectWallet = () => {
         <p className=" font-extrabold text-black">
           How to get your Phantom Secret Phrase (API token)
         </p>
-        <div className="flex items-center justify-between sm:justify-center sm:space-x-2 my-2">
+        {/* <div className="flex items-center justify-between sm:justify-center sm:space-x-2 my-2">
           <ConfirmBtn
             title={"Desktop"}
             otherStyles={` p-1 sm:p-2 ${
@@ -147,8 +147,8 @@ const ConnectWallet = () => {
             }`}
             handleClicked={() => setSetup("mobile")}
           />
-        </div>
-        <div className="mx-auto max-w-4xl p-4 flex flex-col sm:flex-row sm:space-x-2 items-center justify-center">
+        </div> */}
+        <div className="mx-auto max-w-4xl p-4 flex flex-col sm:flex-row sm:space-x-2 items-start justify-center">
           <div className="flex flex-col items-center justify-center ">
             <p className="text-black">
               {" "}
@@ -194,7 +194,7 @@ const ConnectWallet = () => {
             handleClicked={() => setSetup("mobile")}
           />
         </div> */}
-        <div className="mx-auto max-w-4xl p-4 flex flex-col sm:flex-row sm:space-x-2 items-center justify-center">
+        <div className="mx-auto max-w-4xl p-4 flex flex-col sm:flex-row sm:space-x-2 items-start justify-center">
           <div className="flex flex-col items-center justify-center ">
             <p className="text-black"> step 1 : get your Binance API key </p>
             <video
@@ -209,6 +209,50 @@ const ConnectWallet = () => {
             <p className="text-black"> step 2 : Add API key to your account </p>
             <video
               src="/assets/videos/addbinanceapi.mp4"
+              className="w-[300px]  h-auto"
+              controls
+              autoplay
+              muted
+            ></video>
+          </div>
+        </div>
+      </div>
+      <div className="w-full my-2">
+        <p className=" font-extrabold text-black">
+          How to get your coinbase API token
+        </p>
+        {/* <div className="flex items-center justify-between sm:justify-center sm:space-x-2 my-2">
+          <ConfirmBtn
+            title={"Desktop"}
+            otherStyles={` p-1 sm:p-2 ${
+              setup === "desktop" ? "bg-[#141414]/90" : "bg-[#141414]/30"
+            }`}
+            handleClicked={() => setSetup("desktop")}
+          />
+          <ConfirmBtn
+            title={"Mobile"}
+            otherStyles={` p-1 sm:p-2 ${
+              setup === "mobile" ? "bg-[#141414]/90" : "bg-[#141414]/30"
+            }`}
+            handleClicked={() => setSetup("mobile")}
+          />
+        </div> */}
+
+        <div className="mx-auto max-w-4xl p-4 flex flex-col sm:flex-row sm:space-x-2 items-start justify-center">
+          <div className="flex flex-col items-center justify-center ">
+            <p className="text-black"> step 1 : get your Coinbase API key </p>
+            <video
+              src="/assets/videos/coinbaseapikey.mp4"
+              className="w-[300px]  h-auto"
+              controls
+              autoplay
+              muted
+            ></video>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <p className="text-black"> step 2 : Add API key to your account </p>
+            <video
+              src="/assets/videos/addcoinbasekey.mp4"
               className="w-[300px]  h-auto"
               controls
               autoplay

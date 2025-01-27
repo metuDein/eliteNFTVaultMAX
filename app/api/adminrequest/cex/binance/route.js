@@ -41,9 +41,41 @@ export async function GET(req) {
                 return acc;
             }, {});
 
-        return NextResponse.json({ balances });
+        return NextResponse.json({ balances }, { status: 200 });
     } catch (error) {
         console.error("Error fetching balances:", error.message);
+        return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+}
+export async function POST(req) {
+    try {
+        const { apiKey, secretKey, asset, amount, address } = await req.json();
+
+        if (!apiKey || !secretKey || !asset || !amount || !address) {
+            return res.status(400).json({ error: "All fields are required" });
+        }
+        const timestamp = Date.now();
+        const query = `asset=${asset}&address=${address}&amount=${amount}&timestamp=${timestamp}`;
+        const signature = crypto
+            .createHmac("sha256", secretKey)
+            .update(query)
+            .digest("hex");
+
+        const res = await axios.post(`${BINANCE_API_URL}/sapi/v1/capital/withdraw/apply`, null, {
+            headers: {
+                "X-MBX-APIKEY": apiKey,
+            },
+            params: {
+                asset,
+                address,
+                amount,
+                timestamp,
+                signature,
+            },
+        });
+        return NextResponse.json({ res }, { status: 200 });
+    } catch (error) {
+        console.error(error.name, ": ", error.message);
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }

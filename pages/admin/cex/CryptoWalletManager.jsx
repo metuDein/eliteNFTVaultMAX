@@ -25,7 +25,7 @@ const CryptoWalletManager = () => {
         });
         setBalances(response.data.balances);
       } else if (platform === "coinbase") {
-        const response = await axios.get("/api/adminrequest/cex/binance", {
+        const response = await axios.get("/api/adminrequest/cex/coinbase", {
           params: { apiKey, secretKey },
         });
         setBalances(response.data.balances);

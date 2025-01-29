@@ -1,56 +1,51 @@
-import crypto from "crypto";
+import crypto from 'crypto';
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-const COINBASE_API_URL = "https://api.coinbase.com/v2";
+const COINBASE_API_URL = "https://api.pro.coinbase.com";
+
 
 export async function GET(req) {
-    const { searchParams } = new URL(req.url);
-    const apiKey = searchParams.get("apiKey");
-    const secretKey = searchParams.get("secretKey");
-
-    if (!apiKey || !secretKey) {
-        return NextResponse.json({ message: "API key and secret key are required" }, { status: 400 });
-    }
-
     try {
-        const timestamp = Math.floor(Date.now() / 1000); // Current Unix timestamp
-        const requestPath = "/v2/accounts";
+        const apiKey = "organizations/9ff2994f-0d62-4da7-b6d5-fbce781cce1f/apiKeys/1e6e15ad-1b66-478f-af98-3109ee752817";
+        const apiSecret = "\nMHcCAQEEIGfZfui4NWTItADiGq2iDZqwEb7O3UQRj3//Q1hZ9OF/oAoGCCqGSM49\nAwEHoUQDQgAEzyC/qeCVGi7NM8rN0uN757/a9JHcHXtPf6pHdWassM6CQJubQM/y\nAFCHcHMz/UTHdeTG+DflgxbyF7aExp+9Vw==\n-----END EC PRIVATE KEY-----\n";
+
+        if (!apiKey || !apiSecret) {
+            return NextResponse.json({ message: "API key and secret key are required" }, { status: 400 });
+        }
+
+        const timestamp = Math.floor(Date.now() / 1000).toString();
         const method = "GET";
-        const body = ""; // Empty for GET requests
+        const requestPath = "/api/v3/brokerage/accounts"; // Adjust based on your endpoint
 
-        // Generate the signature
-        const message = timestamp + method + requestPath + body;
-        const signature = crypto.createHmac("sha256", secretKey).update(message).digest("hex");
+        // Create the prehash string
+        const message = timestamp + method + requestPath;
 
-        // Make the request to Coinbase API
-        const response = await axios.get(`${COINBASE_API_URL}/accounts`, {
+        // Generate HMAC signature
+        const signature = crypto.createHmac("sha256", apiSecret).update(message).digest("base64");
+
+        const response = await fetch(`https://api.coinbase.com${requestPath}`, {
+            method,
             headers: {
                 "CB-ACCESS-KEY": apiKey,
                 "CB-ACCESS-SIGN": signature,
                 "CB-ACCESS-TIMESTAMP": timestamp,
-                "CB-VERSION": "2023-01-01", // API version
+                "CB-VERSION": "2023-01-01",
+                "Content-Type": "application/json",
             },
         });
 
-        // Parse balances
-        const balances = response.data.data
-            .filter((account) => parseFloat(account.balance.amount) > 0)
-            .reduce((acc, account) => {
-                acc[account.currency] = account.balance.amount;
-                return acc;
-            }, {});
+        if (!response.ok) {
+            throw new Error(`Failed to fetch balances: ${await response.text()}`);
+        }
 
-        return NextResponse.json({ balances }, { status: 200 });
+        const data = await response.json();
+        return NextResponse.json({ balances: data }, { status: 200 });
     } catch (error) {
-        console.error("Error fetching Coinbase balances:", error.response?.data || error.message);
-        return NextResponse.json(
-            { message: "Error fetching balance from Coinbase", error: error.response?.data || error.message },
-            { status: 500 }
-        );
+        console.error("Coinbase API Error:", error.message);
+        return NextResponse.json({ message: "Error fetching balance from Coinbase", error: error.message }, { status: 500 });
     }
 }
-
 
 
 export async function POST(req, res) {

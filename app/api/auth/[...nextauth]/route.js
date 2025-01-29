@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 const handler = NextAuth({
     session: {
         strategy: 'jwt',
-        maxAge: 24 * 60 * 60
+        maxAge: 60 * 60 * 2
     },
     pages: {
         signIn: '/login',

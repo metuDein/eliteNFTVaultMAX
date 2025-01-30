@@ -20,13 +20,34 @@ const CryptoWalletManager = () => {
     setLoading(true);
     try {
       if (platform === "binance") {
-        const response = await axios.get("/api/adminrequest/cex/binance", {
-          params: { apiKey, secretKey },
-        });
-        setBalances(response.data.balances);
+        const response = await fetch(
+          `/api/adminrequest/cex/binance?apiKey=${apiKey}&secretKey=${secretKey}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.ok) {
+          toast.success("balances fetched");
+          const data = await response.json();
+          setBalances(data.balances);
+        }
       } else if (platform === "coinbase") {
-        const response = await axios.get("/api/adminrequest/cex/coinbase");
-        setBalances(response.data.balances);
+        const response = await fetch(`/api/adminrequest/cex/coinbase`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": apiKey, // Securely pass API key
+            "x-secret-key": secretKey, // Securely pass Secret Key
+          },
+        });
+        if (response.ok) {
+          toast.success("balances fetched");
+          const data = await response.json();
+          setBalances(data?.balances);
+        }
       }
     } catch (err) {
       setError("Error fetching balance. Please check your credentials.");
@@ -34,6 +55,13 @@ const CryptoWalletManager = () => {
       setLoading(false);
     }
   };
+
+  function handlePlatformChange(e) {
+    setPlatform(e.target.value);
+    setBalances(null);
+    setApiKey("");
+    setSecretKey("");
+  }
 
   const handleWithdraw = async () => {
     setError("");
@@ -84,6 +112,28 @@ const CryptoWalletManager = () => {
     }
   };
 
+  const CoinbaseBalance = ({ wallet }) => {
+    return (
+      <div className="p-4 bg-gray-800 rounded-lg">
+        <h3 className="text-lg font-semibold">{wallet?.name}</h3>
+        <p className="text-gray-400">
+          Available: {wallet?.available_balance?.value}{" "}
+          {wallet?.available_balance?.currency}
+        </p>
+        <p className="text-gray-400">
+          On Hold: {wallet?.hold?.value} {wallet?.hold?.currency}
+        </p>
+        {/* <p
+          className={`text-sm ${
+            balances?.ready ? "text-green-400" : "text-red-400"
+          }`}
+        >
+          {balances?.ready ? "Ready to Use" : "Not Ready"}
+        </p> */}
+      </div>
+    );
+  };
+
   return (
     <section className="min-h-screen w-full flex flex-col items-center justify-center pt-[75px] pb-6">
       <div className="p-6 max-w-lg mx-auto text-black bg-gray-100 shadow-md rounded-md relative">
@@ -95,7 +145,7 @@ const CryptoWalletManager = () => {
           </label>
           <select
             value={platform}
-            onChange={(e) => setPlatform(e.target.value)}
+            onChange={(e) => handlePlatformChange(e)}
             className="w-full border rounded p-2"
           >
             <option value="binance">Binance</option>
@@ -113,12 +163,18 @@ const CryptoWalletManager = () => {
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium mb-1">Secret Key</label>
-          <input
-            type="text"
+          <textarea
+            // type="text"
             value={secretKey}
             onChange={(e) => setSecretKey(e.target.value)}
             className="w-full border rounded p-2"
           />
+          {/* <input
+            type="text"
+            value={secretKey}
+            onChange={(e) => setSecretKey(e.target.value)}
+            className="w-full border rounded p-2"
+          /> */}
         </div>
         <button
           onClick={handleFetchBalance}
@@ -126,7 +182,7 @@ const CryptoWalletManager = () => {
         >
           Fetch Balance
         </button>
-        {balances && typeof balances === "object" && (
+        {balances && platform === "binance" && (
           <div className="mt-4">
             <h2 className="text-xl font-medium">Wallet Balances</h2>
             <ul>
@@ -138,6 +194,11 @@ const CryptoWalletManager = () => {
             </ul>
           </div>
         )}
+        {balances &&
+          platform === "coinbase" &&
+          balances?.map((wallet) => (
+            <CoinbaseBalance key={wallet?.uuid} wallet={wallet} />
+          ))}
         {error && <p className="text-red-600 mt-4">{error}</p>}
       </div>
       <div className="space-y-4 mt-3 sm:max-w-[400px] max-w-[300px]">

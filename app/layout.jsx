@@ -7,6 +7,7 @@ import ContextProvider from "@/context";
 import Provider from "@/components/context/Provider";
 import { DataProvider } from "@/components/context/DataProvider";
 import Script from "next/script";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -80,6 +81,7 @@ export default function RootLayout({ children }) {
               <Header />
               {children}
               <Footer />
+              <ToastContainer />
             </DataProvider>
           </Provider>
         </ContextProvider>

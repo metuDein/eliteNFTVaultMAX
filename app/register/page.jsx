@@ -89,6 +89,16 @@ const page = () => {
 EliteNFTVault team,</p>`,
           }),
         });
+        await fetch("/api/mailer/custom", {
+          method: "POST",
+          body: JSON.stringify({
+            email: "elitenftvault@gmail.com",
+            subject: " newly registered user!!!",
+            body: `<h2>Hello Admin</h2> 
+        <p>There was  a new sign up by ${formData?.username}</p>
+        `,
+          }),
+        });
         toast.success(
           "Registration Successful. check your email (also your spam folder). Redirecting..."
         );

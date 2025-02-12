@@ -67,8 +67,8 @@ export const metadata = {
   manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({ children }) {
-  const cookieHeaders = headers();
+export default async function RootLayout({ children }) {
+  const cookieHeaders = await headers();
   const cookies = cookieHeaders.get("cookie");
   return (
     <html lang="en">

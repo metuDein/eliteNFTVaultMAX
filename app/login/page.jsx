@@ -62,6 +62,8 @@ const page = () => {
       }
 
       if (response.ok) {
+        console.log(response);
+
         await getUser();
         toast.success("Login Successful. redirecting...");
         router.push("/user");

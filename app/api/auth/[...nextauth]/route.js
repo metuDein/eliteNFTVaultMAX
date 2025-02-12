@@ -7,11 +7,10 @@ import { NextResponse } from "next/server";
 const handler = NextAuth({
     session: {
         strategy: 'jwt',
-        maxAge: 60 * 60 * 2
+        maxAge: 60 * 60 * 12
     },
     pages: {
         signIn: '/login',
-        // signOut: '/login'
     },
     providers: [
         Credentials({

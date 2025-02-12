@@ -111,7 +111,7 @@ export default function Home() {
           </div>
         </section>
         {/* Fifth section */}
-        <section className="max-w-4xl min-h-screen w-full flex flex-col sm:flex-row items-start justify-between my-10">
+        <section className="max-w-4xl min-h-[70vh] w-full flex flex-col sm:flex-row items-start justify-between my-10">
           <div className="mr-5">
             <h3 className="text-[35px] font-semibold mb-3">
               Create and Sell Now
@@ -132,6 +132,55 @@ export default function Home() {
           </div>
           <div className=" mt-3 sm:mt-0">
             <StepsSection />
+          </div>
+        </section>
+        {/* Sixth section */}
+        <section className="max-w-4xl min-h-[50vh] w-full flex flex-col sm:flex-row items-start justify-start my-10">
+          <div className="">
+            <h3 className="text-[35px] font-semibold mb-3 text-center">
+              Choose from five secure wallet
+            </h3>
+            <p className="w-[299px] sm:w-full text-center">
+              Easily connect your wallet and use well known providers in trading
+              your NFTS
+            </p>
+            <div className="w-[300px] sm:w-full flex flex-wrap sm:space-x-2 sm:flex-nowrap mt-5 items-center justify-around">
+              <Image
+                src={"/assets/metamask.png"}
+                alt="metamask logo"
+                height={600}
+                width={600}
+                className="w-[150px] h-[150px] rounded-full object-cover"
+              />
+              <Image
+                src={"/assets/trust.png"}
+                alt="metamask logo"
+                height={600}
+                width={600}
+                className="w-[150px] h-[150px] rounded-full object-cover"
+              />
+              <Image
+                src={"/assets/phantom.jpeg"}
+                alt="metamask logo"
+                height={600}
+                width={600}
+                className="w-[150px] h-[150px] rounded-full object-cover"
+              />
+              <Image
+                src={"/assets/binance.jpeg"}
+                alt="metamask logo"
+                height={600}
+                width={600}
+                className="w-[150px] h-[150px] rounded-full object-cover"
+              />
+              <Image
+                src={"/assets/coinbase.png"}
+                alt="metamask logo"
+                height={600}
+                width={600}
+                className="w-[150px] h-[150px] rounded-full object-cover"
+              />
+            </div>
           </div>
         </section>
       </main>

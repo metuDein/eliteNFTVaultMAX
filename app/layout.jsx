@@ -26,8 +26,8 @@ const dmSans = DM_Sans({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://www.elitenftvault.pro"),
-  title: "EliteNFTVault | Exclusive NFT Collectibles",
+  // metadataBase: new URL("https://www.elitenftvault.pro"),
+  title: "EliteNFTVault",
   description:
     "EliteNFTVault is your gateway to premium digital collectibles. Discover, trade, and showcase exclusive NFTs. ",
   alternates: {
@@ -40,12 +40,12 @@ export const metadata = {
   openGraph: {
     type: "website",
     url: "https://www.elitenftvault.pro",
-    title: "EliteNFTVault | Exclusive NFT Collectibles",
+    title: "EliteNFTVault",
     description:
-      "EliteNFTVault is your gateway to premium digital collectibles. Discover, trade, and showcase exclusive NFTs in a secure and luxurious environment tailored for collectors and creators alike.",
+      "EliteNFTVault is your gateway to premium digital collectibles. Discover, trade, and showcase exclusive NFTs.",
     images: [
       {
-        url: "/favicon-32x32.png",
+        url: "/assets/favicon-32x32.png",
         width: 800,
         height: 600,
         alt: "logo",

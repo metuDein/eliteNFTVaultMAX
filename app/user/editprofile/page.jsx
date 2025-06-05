@@ -72,6 +72,7 @@ const page = () => {
           const res = await fetch("/api/userrequest/edit", {
             method: "PATCH",
             body: JSON.stringify({
+              id : user?._id,
               username: formData.username,
               email: formData.email,
               password: newPassword,

@@ -78,7 +78,7 @@ const page = () => {
     }
   }
   useEffect(() => {
-    router.refresh()
+    window.location.reload()
   }, [])
   return (
     <div className="w-full min-h-screen flex justify-center items-center pt-[75px] pb-6">

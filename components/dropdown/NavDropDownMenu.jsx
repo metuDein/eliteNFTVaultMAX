@@ -20,6 +20,7 @@ const NavDropDownMenu = ({ triggerStyle, user }) => {
   async function signout(params) {
     await signOut();
     setUser({});
+    window.location.reload()
   }
 
   return (

@@ -77,9 +77,7 @@ const page = () => {
       setLoading(false);
     }
   }
-  useEffect(() => {
-    window.location.reload()
-  }, [])
+  
   return (
     <div className="w-full min-h-screen flex justify-center items-center pt-[75px] pb-6">
       <div className="sm:w-[1184px] h-[532px] rounded-[10px] flex justify-around items-center">

@@ -79,7 +79,7 @@ const page = () => {
   }
 
   useEffect(() => {
-    toast.alert("Please reload the tab before logging in.");
+    toast("Please reload the tab before logging in.");
   }, [])
   
   return (

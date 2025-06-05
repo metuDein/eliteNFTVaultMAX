@@ -77,6 +77,10 @@ const page = () => {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    toast.alert("Please reload the tab before logging in.");
+  }, [])
   
   return (
     <div className="w-full min-h-screen flex justify-center items-center pt-[75px] pb-6">

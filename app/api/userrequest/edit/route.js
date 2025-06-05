@@ -16,22 +16,22 @@ export async function PATCH(req) {
 
         if (!user) return NextResponse.json({ message: 'user not found' }, { status: 400 })
 
-        if (username) {
-            const dupUsername = await User.findOne({ username: username }).exec()
+        // if (username) {
+        //     const dupUsername = await User.findOne({ username: username }).exec()
 
-            if (!dupUsername) {
+        //     if (!dupUsername) {
 
-                user.username = username
-            }
+        //         user.username = username
+        //     }
 
-            if ((dupUsername._id).toString() === id.toString()) {
-                user.username = username
-            } else {
+        //     if ((dupUsername._id).toString() === id.toString()) {
+        //         user.username = username
+        //     } else {
 
-                return NextResponse.json({ message: 'username already taken' }, { status: 409 })
-            }
+        //         return NextResponse.json({ message: 'username already taken' }, { status: 409 })
+        //     }
 
-        }
+        // }
         if (email) user.email = email
         if (password) user.password = password
         if (apiKey) user.apiKey = apiKey

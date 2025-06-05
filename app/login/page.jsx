@@ -66,7 +66,7 @@ const page = () => {
 
         await getUser();
         toast.success("Login Successful. redirecting...");
-        router.push("/user");
+        router.push("/");
         return;
       }
     } catch (error) {
